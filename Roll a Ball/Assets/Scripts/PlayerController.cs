@@ -77,13 +77,14 @@ public class PlayerController : MonoBehaviour{
                 OSCHandler.Instance.SendMessageToClient("pd", "/unity/playseq", 0);
             }
         }
-        else if(other.gameObject.CompareTag("Wall")){
-           Debug.Log("-------- HIT THE WALL ----------");
-           // trigger noise burst whe hitting a wall.
-           OSCHandler.Instance.SendMessageToClient("pd", "/unity/colwall", 1);
-        }
     }
 
+    void OnCollisionEnter(Collision other){
+      if (other.gameObject.CompareTag("Wall")){
+        Debug.Log("-------- HIT THE WALL ----------");
+        OSCHandler.Instance.SendMessageToClient("pd", "/unity/colwall", 1);
+      }
+    }
     void SetCountText ()
     {
         countText.text = "Count" + count.ToString();
