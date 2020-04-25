@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour{
 
       //************* Instantiate the OSC Handler...
       OSCHandler.Instance.Init ();
-      OSCHandler.Instance.SendMessageToClient ("pd", "/unity/trigger", "ready");
       OSCHandler.Instance.SendMessageToClient("pd", "/unity/playseq", 1);
       //*************
 
@@ -62,23 +61,27 @@ public class PlayerController : MonoBehaviour{
             other.gameObject.SetActive(false);
             count = count + 1;
             SetCountText ();
+            if(count < 3){
+                OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 500);
+            }
+            if (count < 6){
+                OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 400);
+            }
+            else if(count < 9){
+                OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 300);
+            }
+            else if (count < 12){
+                OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 150);
+            }
+            else{
+                OSCHandler.Instance.SendMessageToClient("pd", "/unity/playseq", 0);
+            }
         }
-              // change the tempo of the sequence based on how many obejcts we have picked up.
-         if(count < 2){
-             OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 500);
-         }
-         if (count < 4){
-             OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 400);
-         }
-         else if(count < 6){
-             OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 300);
-         }
-         else if (count < 8){
-             OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 150);
-         }
-         else{
-             OSCHandler.Instance.SendMessageToClient("pd", "/unity/playseq", 0);
-         }
+        else if(other.gameObject.CompareTag("Wall")){
+           Debug.Log("-------- HIT THE WALL ----------");
+           // trigger noise burst whe hitting a wall.
+           OSCHandler.Instance.SendMessageToClient("pd", "/unity/colwall", 1);
+        }
     }
 
     void SetCountText ()
