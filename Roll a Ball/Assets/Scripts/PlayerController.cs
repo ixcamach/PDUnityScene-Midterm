@@ -67,10 +67,10 @@ public class PlayerController : MonoBehaviour{
             if (count < 6){
                 OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 500);
             }
-            else if(count < 9){
+            else if(count < 10){
                 OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 400);
             }
-            else if (count < 12){
+            else if (count < 14){
                 OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 200);
             }
             else{
