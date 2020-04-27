@@ -62,16 +62,16 @@ public class PlayerController : MonoBehaviour{
             count = count + 1;
             SetCountText ();
             if(count < 3){
-                OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 500);
+                OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 550);
             }
             if (count < 6){
-                OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 400);
+                OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 500);
             }
             else if(count < 9){
-                OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 300);
+                OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 400);
             }
             else if (count < 12){
-                OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 150);
+                OSCHandler.Instance.SendMessageToClient("pd", "/unity/tempo", 200);
             }
             else{
                 OSCHandler.Instance.SendMessageToClient("pd", "/unity/playseq", 0);
@@ -96,5 +96,10 @@ public class PlayerController : MonoBehaviour{
         //************* Send the message to the client...
         OSCHandler.Instance.SendMessageToClient ("pd", "/unity/trigger", count);
         //*************
+    }
+
+    void OnApplicationQuit()
+    {
+        Debug.Log("Application ending");
     }
 }
