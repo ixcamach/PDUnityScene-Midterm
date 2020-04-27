@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour{
       if (other.gameObject.CompareTag("Wall")){
         Debug.Log("-------- HIT THE WALL ----------");
         OSCHandler.Instance.SendMessageToClient("pd", "/unity/colwall", 1);
+        OSCHandler.Instance.SendMessageToClient("pd", "/unity/colwall", 1);
       }
     }
     void SetCountText ()
