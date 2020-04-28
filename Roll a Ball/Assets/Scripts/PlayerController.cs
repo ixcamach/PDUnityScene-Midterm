@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour{
 
     private Rigidbody rb;
     private int count;
-
+    private int alternate;
     void Start ()
     {
       Application.runInBackground = true; //allows unity to update when not in focus
@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour{
         count = 0;
         SetCountText ();
         winText.text = "";
+        alternate = 0;
     }
 
     void FixedUpdate ()
@@ -82,8 +83,15 @@ public class PlayerController : MonoBehaviour{
     void OnCollisionEnter(Collision other){
       if (other.gameObject.CompareTag("Wall")){
         Debug.Log("-------- HIT THE WALL ----------");
-        OSCHandler.Instance.SendMessageToClient("pd", "/unity/colwall", 1);
-        OSCHandler.Instance.SendMessageToClient("pd", "/unity/colwall", 1);
+        alternate = alternate + 1;
+        if (alternate %  2 == 0){
+          OSCHandler.Instance.SendMessageToClient("pd", "/unity/colwall", 1);
+          OSCHandler.Instance.SendMessageToClient("pd", "/unity/colwall", 1);
+        }
+        else{
+          OSCHandler.Instance.SendMessageToClient("pd", "/unity/colwall2", 1);
+          OSCHandler.Instance.SendMessageToClient("pd", "/unity/colwall2", 1);
+        }
       }
     }
     void SetCountText ()
